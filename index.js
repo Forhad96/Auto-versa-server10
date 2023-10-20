@@ -733,6 +733,18 @@ async function run() {
       res.send(result);
     });
 
+    app.post('/brands/:brandName',async(req,res)=>{
+      const brandName = req.params.brandName
+      const newModel = req.body
+       const filter = { brand: brandName };
+       const update = {
+         $push: { models: newModel },
+       };
+
+       const result = await brandsCollections.updateOne(filter, update);
+       res.send(result)
+    })
+
     app.patch("/brands/:name", async (req, res) => {
       const name = req.params.name;
       const product = req.body;
